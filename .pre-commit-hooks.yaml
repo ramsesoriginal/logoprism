@@ -1,0 +1,15 @@
+- id: logoprism-check
+  name: LogoPrism assets are up to date
+  description: Fail if generated logo assets are missing or stale (reads logoprism.toml).
+  entry: logoprism --check
+  language: python
+  files: '\.svg$|logoprism\.toml$'
+  pass_filenames: false
+
+- id: logoprism
+  name: LogoPrism generate assets
+  description: Regenerate logo assets from SVG sources (reads logoprism.toml).
+  entry: logoprism
+  language: python
+  files: '\.svg$|logoprism\.toml$'
+  pass_filenames: false

@@ -1,0 +1,98 @@
+[build-system]
+requires = ["uv_build>=0.12,<0.13"]
+build-backend = "uv_build"
+
+[project]
+name = "logoprism"
+version = "0.1.0"
+description = "One logo, a spectrum of possibilities: turn any SVG logo into a complete set of PNG brand assets."
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "LogoPrism contributors" }]
+keywords = ["svg", "png", "logo", "brand", "favicon", "icons", "assets", "cli", "rich"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
+  "Topic :: Multimedia :: Graphics :: Graphics Conversion",
+  "Topic :: Software Development :: Build Tools",
+  "Typing :: Typed",
+]
+dependencies = [
+    "cyclopts>=5.5.3",
+    "lxml>=6.1.3",
+    "msgspec>=0.22.0",
+    "pillow>=13.0.0",
+    "platformdirs>=4.14.8",
+    "questionary>=2.1.1",
+    "resvg-py>=0.5.0",
+    "rich>=15.0.0",
+    "tinycss2>=1.5.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/ramsesoriginal/logoprism"
+Documentation = "https://github.com/ramsesoriginal/logoprism#readme"
+Repository = "https://github.com/ramsesoriginal/logoprism"
+Issues = "https://github.com/ramsesoriginal/logoprism/issues"
+Changelog = "https://github.com/ramsesoriginal/logoprism/blob/main/CHANGELOG.md"
+
+[project.scripts]
+logoprism = "logoprism.cli:main"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.170.17",
+    "lxml-stubs>=0.5.1",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.6",
+    "ty>=0.0.112",
+]
+docs = [
+    "pyte>=0.8.2",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W", "I", "B", "UP", "SIM", "C4", "PIE", "PTH", "RUF", "PL", "TC", "ARG", "RET", "T20",
+]
+ignore = [
+  "PLR0913",  # CLI entry points legitimately take many arguments
+  "PLR2004",  # magic numbers are fine in colour/geometry maths
+  "PLR0912", "PLR0915", "PLR0911", "PLR0917",
+  "E501",  # the formatter owns line length; help strings may run long
+  "TC001", "TC002", "TC003",  # runtime imports cost nothing here; keeps modules simple
+  "PLC0415",  # lazy imports are deliberate: they keep startup fast
+  "RUF001", "RUF002", "RUF003",  # the brand glyphs are intentional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLR", "ARG", "T20", "E501"]
+"src/logoprism/cli.py" = ["T20"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = ["slow: renders many images"]
+filterwarnings = ["error"]
+
+[tool.ty.environment]
+python-version = "3.14"

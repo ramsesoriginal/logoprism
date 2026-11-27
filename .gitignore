@@ -1,0 +1,47 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+pip-wheel-metadata/
+
+# --- Environments ---------------------------------------------------------
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# --- Tooling caches -------------------------------------------------------
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.ty_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# --- LogoPrism ------------------------------------------------------------
+# Generated output (the default output directory) and local sample logos.
+/logoprism-out/
+/samples/
+.logoprism-cache/
+
+# --- Editors / OS ---------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Claude Code (local) --------------------------------------------------
+.claude/settings.local.json

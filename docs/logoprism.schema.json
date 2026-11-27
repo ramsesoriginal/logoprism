@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/ramsesoriginal/logoprism/main/docs/logoprism.schema.json",
+  "title": "LogoPrism configuration",
+  "$ref": "#/$defs/Settings",
+  "$defs": {
+    "Settings": {
+      "title": "Settings",
+      "description": "Everything that shapes an export. All fields have sensible defaults.",
+      "type": "object",
+      "properties": {
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "SVG files, directories or glob patterns to convert."
+        },
+        "output": {
+          "type": "string",
+          "default": "logoprism-out",
+          "description": "Output directory."
+        },
+        "layout": {
+          "enum": [
+            "flat",
+            "nested"
+          ],
+          "default": "nested",
+          "description": "``nested``: <output>/<stem>/<variant>/<shape>/file.png, ``flat``: <output>/<stem>/file.png."
+        },
+        "name-pattern": {
+          "type": "string",
+          "default": "{stem}-{variant}-{shape}-{size}",
+          "description": "File name template (without extension). Fields: stem, variant, shape, size."
+        },
+        "sizes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "standard"
+          ],
+          "description": "Sizes: integers, presets (favicon, icon, web, large, print, standard, all), a4[@dpi]."
+        },
+        "shapes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "circle",
+              "native",
+              "square"
+            ]
+          },
+          "default": [
+            "native",
+            "square",
+            "circle"
+          ],
+          "description": "native = the logo's own aspect ratio, square, circle = fits an inscribed circle."
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "*"
+          ],
+          "description": "Glob patterns selecting variants, e.g. ``black-*`` or ``*-on-transparent``."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Glob patterns removing variants again."
+        },
+        "padding": {
+          "type": "number",
+          "default": 0.04,
+          "description": "Free margin on every side, as a fraction of the canvas (0 to 0.4)."
+        },
+        "trim": {
+          "type": "boolean",
+          "default": true,
+          "description": "Crop to the drawn content instead of using the SVG's viewBox."
+        },
+        "circle-fit": {
+          "enum": [
+            "bbox",
+            "tight"
+          ],
+          "default": "tight",
+          "description": "``tight``: smallest circle around the drawn pixels, ``bbox``: around the bounding box."
+        },
+        "round-bg": {
+          "type": "boolean",
+          "default": false,
+          "description": "Make solid backgrounds of ``circle`` outputs round instead of filling the square."
+        },
+        "force-square": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also write ``square`` outputs when the logo is already (nearly) square."
+        },
+        "brand-bg": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Brand background colour."
+        },
+        "brand-fg": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Brand foreground colour."
+        },
+        "brand-light": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Light brand colour: used on dark backgrounds."
+        },
+        "brand-dark": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Dark brand colour: used on light backgrounds."
+        },
+        "min-contrast": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Skip solid foreground/background pairs below this WCAG contrast ratio."
+        },
+        "themes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Theme"
+          },
+          "default": {},
+          "description": "Custom colour dictionaries, each producing extra variants."
+        },
+        "optimize": {
+          "type": "boolean",
+          "default": false,
+          "description": "Spend more CPU for smaller PNGs."
+        },
+        "compress-level": {
+          "type": "integer",
+          "default": 6,
+          "description": "zlib level 0-9 when not optimising."
+        },
+        "jobs": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Worker processes (default: all cores)."
+        },
+        "fonts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Font files or directories for <text> elements."
+        },
+        "system-fonts": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use fonts installed on the system."
+        },
+        "files": {
+          "description": "Per-file overrides: a table per glob pattern, with the same keys as above.",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Settings"
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "Theme": {
+      "title": "Theme",
+      "description": "A custom colour dictionary, e.g. to restyle a logo for dark backgrounds.",
+      "type": "object",
+      "properties": {
+        "map": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "description": "Source colour -> target colour. Keys are any CSS colour or ``currentColor``."
+        },
+        "backgrounds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "transparent"
+          ],
+          "description": "Backgrounds to render this theme on: transparent, white, black, brand-bg, brand-light, brand-dark or any CSS colour."
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  }
+}

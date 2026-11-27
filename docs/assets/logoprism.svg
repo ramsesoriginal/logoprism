@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  width="512"
+  height="512"
+  role="img"
+  aria-labelledby="logoprism-title logoprism-desc"
+  class="spectrum"
+  style="color:#08131F"
+>
+  <title id="logoprism-title">LogoPrism brand mark</title>
+  <desc id="logoprism-desc">
+    A single beam of light enters a triangular prism and emerges
+    as six spectral rays, representing the transformation of one
+    source logo into a spectrum of brand assets.
+  </desc>
+
+  <!--
+    LOGOPRISM / BRAND MARK / MASTER
+    ===============================
+
+    One logo. A spectrum of possibilities.
+
+    Concept:
+    - the incident beam represents the source asset
+    - the prism represents the transformation engine
+    - the emerging spectrum represents the generated variants
+
+    Construction:
+    - deliberately constructed, integer-coordinate geometry
+    - symmetrical triangular prism
+    - six diverging spectral rays
+    - transparent background
+    - consistent stroke widths and rounded terminals
+    - no filters, masks, gradients, or raster assets
+
+    Presentation:
+    - spectrum: six individually colored emerging rays
+    - monochrome: all elements inherit currentColor
+    - both variants preserve the exact master geometry
+
+    Customization:
+    - set the root color to change the primary mark color
+    - change the root class to switch presentation modes
+    - override the CSS custom properties to adjust the palette
+  -->
+
+  <style>
+    /* Shared geometry presentation */
+
+    .outlined {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    /* Prism */
+
+    .prism.filled {
+      fill-opacity: 0.045;
+    }
+
+    /* Light beams */
+
+    .beam.internal {
+      stroke-width: 8;
+      stroke-opacity: 0.35;
+    }
+
+    /* Spectral palette */
+
+    .spectrum .ray.red {
+      stroke: var(--prism-red, #E85D75);
+    }
+
+    .spectrum .ray.orange {
+      stroke: var(--prism-orange, #F49B48);
+    }
+
+    .spectrum .ray.yellow {
+      stroke: var(--prism-yellow, #E5B844);
+    }
+
+    .spectrum .ray.green {
+      stroke: var(--prism-green, #42B883);
+    }
+
+    .spectrum .ray.blue {
+      stroke: var(--prism-blue, #3899DB);
+    }
+
+    .spectrum .ray.violet {
+      stroke: var(--prism-violet, #9873D8);
+    }
+
+    /* Monochrome presentation */
+
+    .monochrome .ray {
+      stroke: currentColor;
+    }
+
+    .monochrome .prism.filled {
+      fill: none;
+    }
+
+    .monochrome .beam.internal {
+      stroke-opacity: 1;
+    }
+  </style>
+
+  <defs>
+    <!--
+      Master prism geometry.
+
+      Defined once and reused for the transparent glass surface
+      and the foreground outline.
+
+      Apex:         216, 104
+      Bottom left:   88, 360
+      Bottom right: 344, 360
+    -->
+    <path
+      id="logoprism-prism-shape"
+      d="
+        M 216 104
+        L  88 360
+        L 344 360
+        Z
+      "
+    />
+  </defs>
+
+  <g id="logoprism-brand-mark">
+
+    <!-- Incident light / source asset -->
+    <g id="logoprism-incident-beam">
+      <path
+        id="incident-ray"
+        class="outlined beam incident"
+        d="
+          M 24 232
+          H 152
+        "
+      />
+    </g>
+
+    <!-- Transparent optical surface -->
+    <g id="logoprism-glass-surface">
+      <use
+        href="#logoprism-prism-shape"
+        class="filled prism"
+      />
+    </g>
+
+    <!-- Internal light / transformation -->
+    <g id="logoprism-internal-beam">
+      <path
+        id="internal-ray"
+        class="outlined beam internal"
+        d="
+          M 152 232
+          L 292 256
+        "
+      />
+    </g>
+
+    <!-- Refracted light / generated asset variants -->
+    <g id="logoprism-spectrum" class="outlined beam">
+
+      <path
+        id="spectral-ray-red"
+        class="ray red"
+        d="M 272 216 L 488 112"
+      />
+
+      <path
+        id="spectral-ray-orange"
+        class="ray orange"
+        d="M 280 232 L 488 168"
+      />
+
+      <path
+        id="spectral-ray-yellow"
+        class="ray yellow"
+        d="M 288 248 L 488 224"
+      />
+
+      <path
+        id="spectral-ray-green"
+        class="ray green"
+        d="M 296 264 L 488 280"
+      />
+
+      <path
+        id="spectral-ray-blue"
+        class="ray blue"
+        d="M 304 280 L 488 336"
+      />
+
+      <path
+        id="spectral-ray-violet"
+        class="ray violet"
+        d="M 312 296 L 488 392"
+      />
+
+    </g>
+
+    <!--
+      Foreground prism outline.
+
+      Rendered above all optical elements to preserve the
+      integrity of the silhouette and its intersections.
+    -->
+    <g id="logoprism-prism-outline">
+      <use
+        href="#logoprism-prism-shape"
+        class="outlined prism"
+      />
+    </g>
+
+  </g>
+</svg>
